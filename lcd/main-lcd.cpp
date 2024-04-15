@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "lcd_lib.h"
+#include "mbed.h"
 #include "graph_class.hpp"
 
 #define CLOCK_CENTER_X (LCD_WIDTH / 2)
@@ -70,6 +71,7 @@ int main()
 	while (1)
 	{
 		control_timer();
+		delay(100);
 	}
 
 	return 0;
