@@ -11,6 +11,22 @@
 #define HAND_LENGTH (CLOCK_RADIUS * 0.75)
 #define ANGLE_RANGE 360
 
+Ticker ticker;
+volatile bool delay_flag = false;
+
+void delayCallback()
+{
+	delay_flag = true;
+}
+
+void delay(int ms)
+{
+	delay_flag = false;
+	ticker.attach(delayCallback, ms / 1000.0f);
+	while (!delay_flag)
+		;
+}
+
 int g_tab_sin[61] = {
 	0, 104, 207, 309, 406, 499, 587, 669, 743, 809, 866, 913, 951, 978, 994,
 	1000, 994, 978, 951, 913, 866, 809, 743, 669, 587, 499, 406, 309, 207, 104,
