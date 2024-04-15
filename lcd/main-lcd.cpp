@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "lcd_lib.h"
 #include "mbed.h"
+#include "lcd_lib.h"
 #include "graph_class.hpp"
 
 #define CLOCK_CENTER_X (LCD_WIDTH / 2)
@@ -14,7 +14,7 @@
 int g_tab_sin[61] = {0, 104, 207, 309, 406, 499, 587, 669, 743, 809, 866, 913, 951, 978, 994, 1000, 994, 978, 951, 913, 866, 809, 743, 669, 587, 499, 406, 309, 207, 104, 0, -104, -207, -309, -406, -499, -587, -669, -743, -809, -866, -913, -951, -978, -994, -1000, -994, -978, -951, -913, -866, -809, -743, -669, -587, -499, -406, -309, -207, -104, 0};
 int g_tab_cos[61] = {1000, 994, 978, 951, 913, 866, 809, 743, 669, 587, 500, 406, 309, 207, 104, 0, -104, -207, -309, -406, -499, -587, -669, -743, -809, -866, -913, -951, -978, -994, -1000, -994, -978, -951, -913, -866, -809, -743, -669, -587, -500, -406, -309, -207, -104, 0, 104, 207, 309, 406, 500, 587, 669, 743, 809, 866, 913, 951, 978, 994, 1000};
 
-int32_t g_angle = 0;
+int g_angle = 0;
 RGB g_hand_color = {0, 255, 0}; // Green hand color
 int g_timer_state = 1;			// 1 for running, 0 for stopped
 
@@ -26,8 +26,8 @@ void draw_clock_face()
 
 void draw_hand()
 {
-	int32_t hand_x = CLOCK_CENTER_X + HAND_LENGTH * g_tab_cos[g_angle] / 1000;
-	int32_t hand_y = CLOCK_CENTER_Y + HAND_LENGTH * g_tab_sin[g_angle] / 1000;
+	int hand_x = CLOCK_CENTER_X + HAND_LENGTH * g_tab_cos[g_angle] / 1000;
+	int hand_y = CLOCK_CENTER_Y + HAND_LENGTH * g_tab_sin[g_angle] / 1000;
 	Line hand({CLOCK_CENTER_X, CLOCK_CENTER_Y}, {hand_x, hand_y}, g_hand_color, {0, 0, 0});
 	hand.draw();
 }
@@ -55,10 +55,10 @@ void control_timer()
 int main()
 {
 	lcd_init();
-	// draw_clock_face();
-	// while (1)
-	// {
-	// 	control_timer();
-	// }
+	draw_clock_face();
+	while (1)
+	{
+		control_timer();
+	}
 	return 0;
 }
