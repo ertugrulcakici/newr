@@ -70,7 +70,6 @@ int main()
 	while (1)
 	{
 		control_timer();
-		delay(100);
 	}
 
 	return 0;
