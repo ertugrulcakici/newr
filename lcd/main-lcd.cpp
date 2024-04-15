@@ -14,6 +14,13 @@
 Ticker ticker;
 volatile bool delay_flag = false;
 
+int g_tab_sin[61] = {/* ... */};
+int g_tab_cos[61] = {/* ... */};
+int32_t g_angle = 0;
+RGB g_hand_color = {255, 0, 0}; // Sabit el rengi
+int g_timer_state = 0;
+Line g_hand({0, 0}, {0, 0}, {0, 0, 0}, {0, 0, 0}); // Sabit el nesnesi tanımla
+
 void delayCallback()
 {
 	delay_flag = true;
@@ -27,22 +34,6 @@ void delay(int ms)
 		;
 }
 
-int g_tab_sin[61] = {
-	0, 104, 207, 309, 406, 499, 587, 669, 743, 809, 866, 913, 951, 978, 994,
-	1000, 994, 978, 951, 913, 866, 809, 743, 669, 587, 499, 406, 309, 207, 104,
-	0, -104, -207, -309, -406, -499, -587, -669, -743, -809, -866, -913, -951, -978, -994,
-	-1000, -994, -978, -951, -913, -866, -809, -743, -669, -587, -499, -406, -309, -207, -104,
-	0};
-int g_tab_cos[61] = {
-	1000, 994, 978, 951, 913, 866, 809, 743, 669, 587, 500, 406, 309, 207, 104,
-	0, -104, -207, -309, -406, -499, -587, -669, -743, -809, -866, -913, -951, -978, -994,
-	-1000, -994, -978, -951, -913, -866, -809, -743, -669, -587, -500, -406, -309, -207, -104,
-	0, 104, 207, 309, 406, 500, 587, 669, 743, 809, 866, 913, 951, 978, 994,
-	1000};
-int32_t g_angle = 0;
-RGB g_hand_color = {0, 255, 0};
-int g_timer_state = 0;
-
 void draw_clock_face()
 {
 	Circle clock_face({CLOCK_CENTER_X, CLOCK_CENTER_Y}, CLOCK_RADIUS, {255, 0, 0}, {0, 0, 0});
@@ -53,14 +44,16 @@ void draw_hand()
 {
 	int32_t hand_x = CLOCK_CENTER_X + HAND_LENGTH * g_tab_cos[g_angle] / 1000;
 	int32_t hand_y = CLOCK_CENTER_Y + HAND_LENGTH * g_tab_sin[g_angle] / 1000;
-	Line hand({CLOCK_CENTER_X, CLOCK_CENTER_Y}, {hand_x, hand_y}, g_hand_color, {0, 0, 0});
-	hand.draw();
+	g_hand.setStart({CLOCK_CENTER_X, CLOCK_CENTER_Y});
+	g_hand.setEnd({hand_x, hand_y});
+	g_hand.setColor(g_hand_color);
+	g_hand.setBackgroundColor({0, 0, 0});
+	g_hand.draw();
 }
 
 void update_timer()
 {
-	Line hand({CLOCK_CENTER_X, CLOCK_CENTER_Y}, {CLOCK_CENTER_X + HAND_LENGTH * g_tab_cos[g_angle] / 1000, CLOCK_CENTER_Y + HAND_LENGTH * g_tab_sin[g_angle] / 1000}, {0, 0, 0}, {0, 0, 0});
-	hand.draw();
+	g_hand.hide();
 	g_angle = (g_angle + 6) % ANGLE_RANGE;
 	draw_hand();
 }
@@ -69,11 +62,10 @@ void control_timer()
 {
 	if (g_timer_state == 0)
 	{
-		g_hand_color = {255, 0, 0};
+		// Yeni bir durum, hiçbir şey yapma
 	}
 	else
 	{
-		g_hand_color = {0, 255, 0};
 		update_timer();
 	}
 }
