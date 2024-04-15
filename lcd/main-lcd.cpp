@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include "mbed.h"
 #include "lcd_lib.h"
 #include "graph_class.hpp"
@@ -32,7 +29,7 @@ void draw_clock_face()
 // 	hand.draw();
 // }
 
-void update_timer()
+void u_timer()
 {
 	// Line hand({CLOCK_CENTER_X, CLOCK_CENTER_Y}, {CLOCK_CENTER_X + HAND_LENGTH * g_tab_cos[g_angle] / 1000, CLOCK_CENTER_Y + HAND_LENGTH * g_tab_sin[g_angle] / 1000}, {0, 0, 0}, {0, 0, 0});
 	// hand.hide();
@@ -40,7 +37,7 @@ void update_timer()
 	// draw_hand();
 }
 
-void control_timer()
+void c_timer()
 {
 	if (g_timer_state == 0)
 	{
@@ -48,7 +45,7 @@ void control_timer()
 	}
 	else
 	{
-		update_timer();
+		u_timer();
 	}
 }
 
@@ -56,9 +53,9 @@ int main()
 {
 	lcd_init();
 	draw_clock_face();
-	// while (1)
-	// {
-	// 	// control_timer();
-	// }
+	while (1)
+	{
+		c_timer();
+	}
 	return 0;
 }
