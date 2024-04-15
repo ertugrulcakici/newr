@@ -33,7 +33,11 @@ void u_timer()
 {
 	Line hand({CLOCK_CENTER_X, CLOCK_CENTER_Y}, {CLOCK_CENTER_X + HAND_LENGTH * g_tab_cos[g_angle] / 1000, CLOCK_CENTER_Y + HAND_LENGTH * g_tab_sin[g_angle] / 1000}, {0, 0, 0}, {0, 0, 0});
 	hand.hide();
-	g_angle = (g_angle + 6) % ANGLE_RANGE;
+	g_angle++;
+	if (g_angle == 60)
+	{
+		g_timer_state = 0;
+	}
 	draw_hand();
 }
 
