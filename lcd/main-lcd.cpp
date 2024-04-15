@@ -21,20 +21,20 @@ void draw_clock_face()
 	clock_face.draw();
 }
 
-// void draw_hand()
-// {
-// 	int hand_x = CLOCK_CENTER_X + HAND_LENGTH * g_tab_cos[g_angle] / 1000;
-// 	int hand_y = CLOCK_CENTER_Y + HAND_LENGTH * g_tab_sin[g_angle] / 1000;
-// 	Line hand({CLOCK_CENTER_X, CLOCK_CENTER_Y}, {hand_x, hand_y}, g_hand_color, {0, 0, 0});
-// 	hand.draw();
-// }
+void draw_hand()
+{
+	int hand_x = CLOCK_CENTER_X + HAND_LENGTH * g_tab_cos[g_angle] / 1000;
+	int hand_y = CLOCK_CENTER_Y + HAND_LENGTH * g_tab_sin[g_angle] / 1000;
+	Line hand({CLOCK_CENTER_X, CLOCK_CENTER_Y}, {hand_x, hand_y}, g_hand_color, {0, 0, 0});
+	hand.draw();
+}
 
 void u_timer()
 {
-	// Line hand({CLOCK_CENTER_X, CLOCK_CENTER_Y}, {CLOCK_CENTER_X + HAND_LENGTH * g_tab_cos[g_angle] / 1000, CLOCK_CENTER_Y + HAND_LENGTH * g_tab_sin[g_angle] / 1000}, {0, 0, 0}, {0, 0, 0});
-	// hand.hide();
-	// g_angle = (g_angle + 6) % ANGLE_RANGE;
-	// draw_hand();
+	Line hand({CLOCK_CENTER_X, CLOCK_CENTER_Y}, {CLOCK_CENTER_X + HAND_LENGTH * g_tab_cos[g_angle] / 1000, CLOCK_CENTER_Y + HAND_LENGTH * g_tab_sin[g_angle] / 1000}, {0, 0, 0}, {0, 0, 0});
+	hand.hide();
+	g_angle = (g_angle + 6) % ANGLE_RANGE;
+	draw_hand();
 }
 
 void c_timer()
