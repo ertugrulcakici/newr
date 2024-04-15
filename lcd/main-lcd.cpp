@@ -55,10 +55,10 @@ void control_timer()
 int main()
 {
 	lcd_init();
-	draw_clock_face();
-	while (1)
-	{
-		control_timer();
-	}
+	// draw_clock_face();
+	// while (1)
+	// {
+	// 	control_timer();
+	// }
 	return 0;
 }
